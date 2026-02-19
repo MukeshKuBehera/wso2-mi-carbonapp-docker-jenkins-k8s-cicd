@@ -30,6 +30,12 @@ buildNumber.properties
 mvnw
 mvnw.cmd
 
+# Allow Maven Wrapper
+!mvnw
+!mvnw.cmd
+!.mvn/
+!.mvn/**
+
 ##############################
 ## Visual Studio Code
 ##############################
