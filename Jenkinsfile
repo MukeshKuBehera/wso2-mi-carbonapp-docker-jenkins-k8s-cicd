@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    options {
+        timestamps()
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -15,24 +19,26 @@ pipeline {
         }
 
         stage('Build All Services (CAR)') {
-            agent {
-                docker {
-                    image 'maven:3.9.9-eclipse-temurin-17'
-                    args '-v /root/.m2:/root/.m2'
-                }
-            }
             steps {
                 script {
-                    // Find all directories inside services/
+                    // Find all service directories under services/
                     def services = sh(
                         script: "ls -d services/*/",
                         returnStdout: true
-                    ).trim().split("\n")
+                    ).trim()
 
-                    for (svc in services) {
+                    if (!services) {
+                        error "No services found under services/ directory"
+                    }
+
+                    def svcList = services.split("\n")
+
+                    for (svc in svcList) {
                         echo "Building service: ${svc}"
                         dir(svc) {
-                            sh 'mvn clean package'
+                            // Ensure mvnw is executable and build
+                            sh 'chmod +x mvnw'
+                            sh './mvnw clean package'
                         }
                     }
                 }
@@ -43,6 +49,15 @@ pipeline {
             steps {
                 archiveArtifacts artifacts: 'services/**/target/*.car', fingerprint: true
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build completed successfully. CAR files archived.'
+        }
+        failure {
+            echo 'Build failed. Check logs above.'
         }
     }
 }
