@@ -17,7 +17,8 @@ pipeline {
         stage('Build HealthcareService CAR') {
             steps {
                 dir('services/HealthcareService') {
-                    sh 'mvn clean package'
+                    sh 'chmod +x mvnw'
+                    sh './mvnw clean package'
                 }
             }
         }
