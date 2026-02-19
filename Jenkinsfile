@@ -14,16 +14,16 @@ pipeline {
 
         stage('List Services') {
             steps {
-                sh 'ls -l services'
+                sh 'ls -l services || true'
             }
         }
 
         stage('Build All Services (CAR)') {
             steps {
                 script {
-                    // Find all service directories under services/
+                    // List only real service directories (exclude Jenkins @tmp folders)
                     def services = sh(
-                        script: "ls -d services/*/",
+                        script: "ls -d services/*/ 2>/dev/null | grep -v '@tmp' || true",
                         returnStdout: true
                     ).trim()
 
@@ -36,7 +36,6 @@ pipeline {
                     for (svc in svcList) {
                         echo "Building service: ${svc}"
                         dir(svc) {
-                            // Ensure mvnw is executable and build
                             sh 'chmod +x mvnw'
                             sh './mvnw clean package'
                         }
