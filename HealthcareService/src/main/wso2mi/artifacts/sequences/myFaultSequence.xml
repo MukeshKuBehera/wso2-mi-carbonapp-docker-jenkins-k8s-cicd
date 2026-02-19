@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="myFaultSequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+<log level="custom">
+        <property name="MESSAGE" value="An error occurred in the integration flow"/>
+        <property name="ERR_CODE" expression="get-property('ERROR_CODE')"/>
+        <property name="ERR_MSG" expression="get-property('ERROR_MESSAGE')"/>
+    </log>
+    <payloadFactory media-type="json">
+        <format>
+            {
+                "error": {
+                    "code": "$1",
+                    "message": "$2"
+                }
+            }
+        </format>
+        <args>
+            <arg evaluator="xml" expression="get-property('ERROR_CODE')"/>
+            <arg evaluator="xml" expression="get-property('ERROR_MESSAGE')"/>
+        </args>
+    </payloadFactory>
+    <property name="HTTP_SC" value="500" scope="axis2"/>
+    <respond/>
+</sequence>
