@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="ErrorHandlingSeq" xmlns="http://ws.apache.org/ns/synapse">
+
+    <log level="full">
+        <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+        <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+    </log>
+
+    <payloadFactory media-type="json">
+        <format>
+        {
+            "status": "FAILED",
+            "errorCode": "$1",
+            "message": "$2"
+        }
+        </format>
+        <args>
+            <arg expression="get-property('ERROR_CODE')"/>
+            <arg expression="get-property('ERROR_MESSAGE')"/>
+        </args>
+    </payloadFactory>
+
+    <respond/>
+
+</sequence>

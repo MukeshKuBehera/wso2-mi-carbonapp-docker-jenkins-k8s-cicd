@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="CommonLoggingSeq" xmlns="http://ws.apache.org/ns/synapse">
+
+    <property name="correlation.id" expression="uuid()" scope="default"/>
+
+    <log level="custom">
+        <property name="CorrelationID" expression="$ctx:correlation.id"/>
+        <property name="HTTP_METHOD" expression="$axis2:HTTP_METHOD"/>
+        <property name="REQUEST_PATH" expression="$axis2:REST_URL_POSTFIX"/>
+    </log>
+
+</sequence>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint name="HospitalBackendEP" xmlns="http://ws.apache.org/ns/synapse">
+    <http uri-template="http://localhost:9090/{uri.var.backendPath}">
+        
+        <timeout>
+            <duration>60000</duration>
+            <responseAction>fault</responseAction>
+        </timeout>
+
+        <suspendOnFailure>
+            <initialDuration>1000</initialDuration>
+            <progressionFactor>2</progressionFactor>
+        </suspendOnFailure>
+
+        <markForSuspension>
+            <retriesBeforeSuspension>3</retriesBeforeSuspension>
+        </markForSuspension>
+
+    </http>
+</endpoint>
