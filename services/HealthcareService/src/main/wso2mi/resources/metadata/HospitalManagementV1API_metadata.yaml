@@ -1,0 +1,10 @@
+---
+key: "HospitalManagementV1API-1.0.0"
+name : "HospitalManagementV1API"
+displayName : "HospitalManagementV1API"
+description: "HospitalManagementV1API"
+version: "1.0.0"
+serviceUrl: "https://{MI_HOST}:{MI_PORT}/hospital/management/v1"
+definitionType: "OAS3"
+securityType: "BASIC"
+mutualSSLEnabled: false

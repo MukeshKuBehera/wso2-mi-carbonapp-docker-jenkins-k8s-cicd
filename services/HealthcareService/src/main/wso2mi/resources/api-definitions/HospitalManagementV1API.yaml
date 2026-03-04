@@ -1,0 +1,80 @@
+openapi: 3.0.1
+info:
+  title: HospitalManagementV1API
+  description: API Definition of HospitalManagementV1API
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/hospital/management/v1
+- url: https://localhost:8253/hospital/management/v1
+paths:
+  /{backendPath+}:
+    get:
+      parameters:
+      - name: backendPath+
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: Default response
+    put:
+      parameters:
+      - name: backendPath+
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Sample Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: object
+          application/xml:
+            schema:
+              type: object
+              xml:
+                name: payload
+        required: false
+      responses:
+        default:
+          description: Default response
+    post:
+      parameters:
+      - name: backendPath+
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Sample Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: object
+          application/xml:
+            schema:
+              type: object
+              xml:
+                name: payload
+        required: false
+      responses:
+        default:
+          description: Default response
+    delete:
+      parameters:
+      - name: backendPath+
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: Default response
